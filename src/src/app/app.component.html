@@ -1,0 +1,18 @@
+<main class="container max-w-4xl print:max-2xl mx-auto px-6 py-10 text-gray-800 font-sans">
+
+  <app-summary [name]="Info.name" [initials]="Info.initials" [avatarUrl]="Info.avatarUrl" [summary]="Info.summary"
+    [about]="Info.about" [location]="Info.location" [locationLink]="Info.locationLink"
+    [personalWebsiteUrl]="Info.personalWebsiteUrl" [email]="Info.email" [tel]="Info.tel" [githubUrl]="Info.github"
+    [linkedinUrl]="Info.linkedIn"></app-summary>
+
+  <app-work [workExperience]="Info.experiences"></app-work>
+
+  <app-education [education]="Info.education"></app-education>
+
+  <app-certificates [certificates]="Info.certifications"></app-certificates>
+
+  <app-skills [skills]="Info.skills" class="print:hidden"></app-skills>
+
+  <app-projects [projects]="Info.projects"></app-projects>
+
+</main>
