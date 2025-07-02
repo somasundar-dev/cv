@@ -231,5 +231,16 @@ export const RESUME_DATA: any = {
         github: 'https://github.com/somasundar-dev/cv',
       },
     },
+    {
+      title: 'replace-vars-action',
+      techStack: ['TypeScript', 'Github Actions'],
+      description:
+        'GitHub Action replaces placeholders in a given input file using environment variables or GitHub secrets',
+      logo: 'https://raw.githubusercontent.com/Somasundar-Projects/replace-vars-action/refs/heads/main/icon.png',
+      link: {
+        href: 'https://github.com/marketplace/actions/replace-vars-action',
+        github: 'https://github.com/Somasundar-Projects/replace-vars-action',
+      },
+    },
   ],
 };
