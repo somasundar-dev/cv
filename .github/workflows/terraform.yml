@@ -42,13 +42,15 @@ jobs:
           uses: actions/setup-node@v4
           with:
             node-version: '20'
-            
+
         - name: Generate Angular Build
           run: |
             cd ./src
             npm ci
             npm run build
             cd ..
+            rm -rf Infra/App
+            mkdir -p Infra/App
             mv src/dist/cv/browser/* ./Infra/App/
 
 
