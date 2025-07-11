@@ -17,7 +17,7 @@ Welcome to my portfolio website! This site showcases my projects, skills, and ex
 
 1. Clone the repository:
     ```bash
-    git clone https://github.com/somasundar-dev/somasundar-dev.github.io.git
+    git clone https://github.com/somasundar-dev/cv.git
     ```
 2. Install dependencies (if applicable):
     ```bash
