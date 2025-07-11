@@ -32,7 +32,7 @@ jobs:
             input-file: "./Infra/variables.tfvars.json"
             output-file: "./Infra/variables.tfvars.json"
           env:
-            aws_region: ${{ secrets.AWS_REGION }}
+            aws_region: ${{ vars.AWS_REGION }}
             environment: "prod"
             bucket_name: ${{ vars.TERRAFORM_STATE_BUCKET }}
             app_name: "cv"
