@@ -25,19 +25,7 @@ jobs:
       steps:
         - name: Checkout caller repo
           uses: actions/checkout@v4
-
-        - name: Replace placeholders
-          uses: Somasundar-Projects/replace-vars-action@v1.1.0
-          with:
-            input-file: "./Infra/variables.tfvars.json"
-            output-file: "./Infra/variables.tfvars.json"
-          env:
-            aws_region: ${{ vars.AWS_REGION }}
-            environment: "prod"
-            bucket_name: ${{ vars.TERRAFORM_STATE_BUCKET }}
-            app_name: "cv"
-            current_version: 1.0.${{ github.run_number }}
-
+        
         - name: Install Node.js
           uses: actions/setup-node@v4
           with:
@@ -53,6 +41,17 @@ jobs:
             mkdir -p Infra/App
             mv src/dist/cv/browser/* ./Infra/App/
 
+        - name: Replace placeholders
+          uses: Somasundar-Projects/replace-vars-action@v1.1.0
+          with:
+            input-file: "./Infra/variables.tfvars.json"
+            output-file: "./Infra/variables.tfvars.json"
+          env:
+            aws_region: ${{ vars.AWS_REGION }}
+            environment: "prod"
+            bucket_name: ${{ vars.TERRAFORM_STATE_BUCKET }}
+            app_name: "cv"
+            current_version: 1.0.${{ github.run_number }}
 
         - name: Create Terraform file
           run: |
@@ -72,7 +71,7 @@ jobs:
       name: Terraform Deploy
       uses: Somasundar-Projects/Deployments/.github/workflows/terraform.yml@main
       with:
-        app_name: "personal-api-gateway"
+        app_name: "cv"
         aws_region: ${{ vars.AWS_REGION }}
         command: ${{ github.event.inputs.run || 'apply' }}
         tfvars_file_path: "variables.tfvars.json"
