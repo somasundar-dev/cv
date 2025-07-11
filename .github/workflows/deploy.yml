@@ -64,7 +64,7 @@ jobs:
             name: Deployment-Terraform
             if-no-files-found: error
             retention-days: 7
-            path: ./Infra/Deployment-Terraform.tar.gz
+            path: Deployment-Terraform.tar.gz
 
 
     deployment:
