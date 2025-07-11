@@ -56,8 +56,7 @@ jobs:
 
         - name: Create Terraform file
           run: |
-            tar -czf Deployment-Terraform.tar.gz *.tf *.json
-            working-directory: "./Infra/"
+            tar -czf Deployment-Terraform.tar.gz ./Infra/*
 
         - name: Upload artifact
           uses: actions/upload-artifact@v4
