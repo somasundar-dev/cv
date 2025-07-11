@@ -1,0 +1,29 @@
+name: Deploy to AWS with Terraform
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+    create-tfvars:
+      runs-on: ubuntu-latest
+      steps:
+        - name: Checkout caller repo
+          uses: actions/checkout@v4
+
+        - name: Replace placeholders
+          uses: Somasundar-Projects/replace-vars-action@v1.1.0
+          with:
+            input-file: "./Infra/variables.tfvars.json"
+            output-file: "./Infra/variables.tfvars.json"
+          env:
+            aws_region: ${{ secrets.AWS_REGION }}
+            environment: ${{ secrets.ENVIRONMENT }}
+            bucket_name: ${{ vars.TERRAFORM_STATE_BUCKET }}
+            app_name: ${{ vars.APP_NAME }}   
+            current_version: 1.0.${{ github.run_number }}
+
