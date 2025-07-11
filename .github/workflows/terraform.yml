@@ -4,12 +4,19 @@ on:
   push:
     branches:
       - main
-  pull_request:
-    branches:
-      - main
+  workflow_dispatch:
+    inputs:
+      run:
+        default: 'Deploy'
+        description: "Run Deployment or Destroy"
+        required: true
+        type: choice
+        options:
+          - apply
+          - destroy
 
 jobs:
-    create-tfvars:
+    Generate-Build:
       runs-on: ubuntu-latest
       steps:
         - name: Checkout caller repo
@@ -22,8 +29,51 @@ jobs:
             output-file: "./Infra/variables.tfvars.json"
           env:
             aws_region: ${{ secrets.AWS_REGION }}
-            environment: ${{ secrets.ENVIRONMENT }}
+            environment: "prod"
             bucket_name: ${{ vars.TERRAFORM_STATE_BUCKET }}
-            app_name: ${{ vars.APP_NAME }}   
+            app_name: "cv"
             current_version: 1.0.${{ github.run_number }}
 
+        - name: Install Node.js
+          uses: actions/setup-node@v4
+          with:
+            node-version: '20'
+            cache: 'npm'
+
+        - name: Generate Angular Build
+          run: |
+            cd ./src
+            npm ci
+            npm run build
+            cd ..
+            mv src/dist/cv/browser/* ./Infra/App/
+
+
+        - name: Create Terraform file
+          run: |
+            tar -czf Deployment-Terraform.tar.gz *.tf *.json
+            working-directory: "./Infra/"
+
+        - name: Upload artifact
+          uses: actions/upload-artifact@v4
+          with:
+            name: Deployment-Terraform
+            if-no-files-found: error
+            retention-days: 7
+            path: ./Infra/Deployment-Terraform.tar.gz
+
+
+    deployment:
+      needs: Generate-Build
+      name: Terraform Deploy
+      uses: Somasundar-Projects/Deployments/.github/workflows/terraform.yml@main
+      with:
+        app_name: "personal-api-gateway"
+        aws_region: ${{ vars.AWS_REGION }}
+        command: ${{ github.event.inputs.run || 'apply' }}
+        tfvars_file_path: "variables.tfvars.json"
+        bucket_name: ${{ vars.TERRAFORM_STATE_BUCKET }}
+        with_backend: true
+        environment: "prod"
+      secrets:
+        aws_identity_provider_role: ${{ secrets.AWS_OCID_ROLE }}
