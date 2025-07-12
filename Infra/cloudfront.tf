@@ -42,6 +42,11 @@ resource "aws_cloudfront_distribution" "cloudfront_distribution" {
     }
   }
 
+  custom_error_response {
+    error_code            = 403
+    response_code         = 404
+  }
+
   viewer_certificate {
     cloudfront_default_certificate = true
   }
