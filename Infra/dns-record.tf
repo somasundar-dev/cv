@@ -1,6 +1,6 @@
 # dns-record.tf
 resource "aws_route53_record" "cloudfront_alias" {
-  zone_id = aws_route53_zone.main.zone_id
+  zone_id = data.aws_route53_zone.main.zone_id
   name    = var.domain_name
   type    = "A"
 
