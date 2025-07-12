@@ -3,6 +3,8 @@ resource "aws_cloudfront_origin_access_identity" "cloudfront_oai" {
 }
 
 resource "aws_cloudfront_distribution" "cloudfront_distribution" {
+  depends_on = [aws_acm_certificate_validation.cert_validation]
+
   origin {
     domain_name = data.aws_s3_bucket.website_bucket.bucket_regional_domain_name
     origin_id   = data.aws_s3_bucket.website_bucket.id
@@ -16,6 +18,8 @@ resource "aws_cloudfront_distribution" "cloudfront_distribution" {
   enabled             = true
   is_ipv6_enabled     = true
   default_root_object = "index.html"
+
+  aliases = [var.domain_name]
 
   default_cache_behavior {
     allowed_methods  = ["GET", "HEAD"]
@@ -42,14 +46,10 @@ resource "aws_cloudfront_distribution" "cloudfront_distribution" {
     }
   }
 
-  custom_error_response {
-    error_code         = 403
-    response_code      = 404
-    response_page_path = "index.html"
-  }
-
   viewer_certificate {
-    cloudfront_default_certificate = true
+    acm_certificate_arn            = aws_acm_certificate.cert.arn
+    ssl_support_method             = "sni-only"
+    minimum_protocol_version       = "TLSv1.2_2021"
   }
 }
 
