@@ -3,6 +3,8 @@ resource "aws_cloudfront_origin_access_identity" "cloudfront_oai" {
 }
 
 resource "aws_cloudfront_distribution" "cloudfront_distribution" {
+  depends_on = [aws_acm_certificate_validation.cert_validation, aws_acm_certificate.cert, aws_route53_zone.main]
+
   origin {
     domain_name = data.aws_s3_bucket.website_bucket.bucket_regional_domain_name
     origin_id   = data.aws_s3_bucket.website_bucket.id
@@ -42,9 +44,18 @@ resource "aws_cloudfront_distribution" "cloudfront_distribution" {
     }
   }
 
+  # viewer_certificate {
+  #   cloudfront_default_certificate = true
+  # }
   viewer_certificate {
-    cloudfront_default_certificate = true
+    acm_certificate_arn            = aws_acm_certificate.cert.arn
+    ssl_support_method             = "sni-only"
+    minimum_protocol_version       = "TLSv1.2_2021"
+    cloudfront_default_certificate = false
   }
+
+  aliases = [var.domain_name]
+
 }
 
 resource "aws_s3_bucket_policy" "website_bucket_policy" {
