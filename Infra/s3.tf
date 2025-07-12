@@ -4,7 +4,7 @@ resource "null_resource" "upload_angular_app" {
   }
 
   triggers = {
-    build_hash = filesha256("./App/index.html")
+    version = var.current_version
   }
 }
 

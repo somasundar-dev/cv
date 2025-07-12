@@ -52,6 +52,7 @@ jobs:
             bucket_name: ${{ vars.TERRAFORM_STATE_BUCKET }}
             app_name: "cv"
             current_version: 1.0.${{ github.run_number }}
+            domain_name: ${{ secrets.WEBSITE_DOMAIN_NAME }}
 
         - name: Create Terraform file
           run: |
