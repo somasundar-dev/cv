@@ -3,7 +3,7 @@ resource "aws_cloudfront_origin_access_identity" "cloudfront_oai" {
 }
 
 resource "aws_cloudfront_distribution" "cloudfront_distribution" {
-  depends_on = [aws_acm_certificate_validation.cert_validation, aws_acm_certificate.cert, aws_route53_zone.main]
+  depends_on = [data.aws_acm_certificate.cert, data.aws_s3_bucket.website_bucket, aws_cloudfront_origin_access_identity.cloudfront_oai]
 
   origin {
     domain_name = data.aws_s3_bucket.website_bucket.bucket_regional_domain_name
@@ -48,7 +48,7 @@ resource "aws_cloudfront_distribution" "cloudfront_distribution" {
   #   cloudfront_default_certificate = true
   # }
   viewer_certificate {
-    acm_certificate_arn            = aws_acm_certificate.cert.arn
+    acm_certificate_arn            = data.aws_acm_certificate.cert.arn
     ssl_support_method             = "sni-only"
     minimum_protocol_version       = "TLSv1.2_2021"
     cloudfront_default_certificate = false
