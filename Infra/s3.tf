@@ -19,3 +19,8 @@ resource "aws_s3_object" "current_redirect" {
 
   depends_on = [null_resource.upload_angular_app]
 }
+
+resource "aws_s3_bucket_policy" "website_bucket_policy" {
+  bucket = data.aws_s3_bucket.website_bucket.id
+  policy = jsonencode(local.merged_policy)
+}
