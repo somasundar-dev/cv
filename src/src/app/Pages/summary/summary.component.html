@@ -1,6 +1,5 @@
 <!-- Header -->
-<header class="flex sm:flex-row justify-between items-center gap-6 mb-6">
-
+<header class="flex sm:flex-row justify-between items-center gap-4 mb-2">
   <div>
     <h1 class="text-3xl font-bold">{{ name }}&nbsp;{{ initials }}</h1>
     <p class="text-gray-600">{{summary}}</p>
@@ -8,9 +7,11 @@
       class="flex items-center text-sm text-gray-500 hover:text-blue-600 transition-colors">
       {{location}}
     </a>
-    <div class="flex gap-4 not-print:mt-3">
-      <a *ngIf="email" [href]="'mailto:' + email" aria-label="Email" class="transition-colors text-xs text-indigo-500 hover:text-indigo-700">
-        <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" width="20" height="20" class="print:hidden">
+    <div class="flex gap-2 not-print:mt-3">
+      <a *ngIf="email" [href]="'mailto:' + email" aria-label="Email"
+        class="transition-colors text-xs text-indigo-500 hover:text-indigo-700">
+        <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+          class="print:hidden">
           <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
           <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
           <g id="SVGRepo_iconCarrier">
@@ -20,8 +21,10 @@
         </svg>
         <span class="not-print:hidden text-xs ml-1">{{ email }}</span>
       </a>
-      <a *ngIf="tel" [href]="'tel:' + tel" aria-label="Phone" class="transition-colors text-xs text-indigo-500 hover:text-indigo-700">
-        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" width="20" height="20" class="print:hidden">
+      <a *ngIf="tel" [href]="'tel:' + tel" aria-label="Phone"
+        class="transition-colors text-xs text-indigo-500 hover:text-indigo-700">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+          class="print:hidden">
           <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
           <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
           <g id="SVGRepo_iconCarrier">
@@ -40,7 +43,8 @@
       </a>
       <a *ngIf="personalWebsiteUrl" [href]="personalWebsiteUrl" target="_blank" rel="noopener noreferrer"
         aria-label="Website" class="text-indigo-500 hover:text-indigo-700 transition-colors text-xs">
-        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" width="20" height="20" class="print:hidden">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+          class="print:hidden">
           <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
           <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
           <g id="SVGRepo_iconCarrier">
@@ -95,12 +99,26 @@
       </a>
     </div>
   </div>
-  <img [src]="avatarUrl" class="w-24 h-24 rounded-2xl" [alt]="name" />
+  <img [src]="avatarUrl" class="w-24 h-32 rounded print:hidden" [alt]="name" />
 </header>
+<hr/>
 <!-- About -->
 <section>
-  <h2 class="text-xl font-semibold mb-2">About</h2>
+  <h2 class="text-xl font-semibold bg-gray-300">About</h2>
   <p class="text-sm leading-6">
-    {{ about }}
+    {{ summaryWithExperience }}
   </p>
+</section>
+<section>
+  <h2 class="text-xl font-semibold bg-gray-300">Technical Skills</h2>
+  <p class="text-sm leading-6"><b>Programming Languages & Frameworks:</b> C#, .NET, React, Angular, Python, JavaScript,
+    Typescript, SQL, HTML, CSS, Node JS</p>
+  <p class="text-sm leading-6"><b>Databases:</b> MS SQL, PostgreSQL, MongoDB, AWS DynamoDB</p>
+  <p class="text-sm leading-6"><b>Cloud Technologies & Web Servers:</b> AWS (S3, Lambda, API gateway, Glue Job, Cloud
+    Watch, Kafka, Dynamo DB), Azure (App Services, blob storage, PostgreSQL server, Azure VM, AKS), IIS, nginx</p>
+  <p class="text-sm leading-6"><b>Version Control:</b> Git, GitHub, TFS</p>
+  <p class="text-sm leading-6"><b>CI\CD:</b> GitHub Actions, Terraform, Octopus Deploy, Jenkins</p>
+  <p class="text-sm leading-6"><b>Project Management:</b> JIRA</p>
+  <p class="text-sm leading-6"><b>Tools & IDE's:</b> Visual Studio, VS Code, SSMS, GitHub desktop, Azure Data Studio,
+    MongoDB Compass, Postman, PgAdmin, AWS CLI, AWS SAM CLI and Azure CLI</p>
 </section>

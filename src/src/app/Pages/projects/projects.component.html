@@ -1,7 +1,7 @@
 <!-- Projects -->
 <p class="my-8 force-page-break"></p>
-<section class="mt-8" *ngIf="projects && projects.length > 0">
-  <h2 class="text-xl font-semibold mb-4">Side Projects</h2>
+<section class="mt-2" *ngIf="projects && projects.length > 0">
+  <h2 class="text-xl font-semibold bg-gray-300 mb-2">Side Projects</h2>
   <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
     <div *ngFor="let proj of projects" class="border p-4 rounded-lg flex items-start gap-4">
       <img *ngIf="proj.logo" [src]="proj.logo" alt="{{proj.title}} logo" class="w-10 h-10 object-contain rounded" />

@@ -3,15 +3,13 @@
   <app-summary [name]="Info.name" [initials]="Info.initials" [avatarUrl]="Info.avatarUrl" [summary]="Info.summary"
     [about]="Info.about" [location]="Info.location" [locationLink]="Info.locationLink"
     [personalWebsiteUrl]="Info.personalWebsiteUrl" [email]="Info.email" [tel]="Info.tel" [githubUrl]="Info.github"
-    [linkedinUrl]="Info.linkedIn"></app-summary>
+    [linkedinUrl]="Info.linkedIn" [startDate]="Info.start_date"></app-summary>
 
   <app-work [workExperience]="Info.experiences"></app-work>
 
   <app-education [education]="Info.education"></app-education>
 
   <app-certificates [certificates]="Info.certifications"></app-certificates>
-
-  <app-skills [skills]="Info.skills" class="print:hidden"></app-skills>
 
   <app-projects [projects]="Info.projects"></app-projects>
 
