@@ -36,10 +36,6 @@ jobs:
             cd ./src
             npm ci
             npm run build
-            cd ..
-            rm -rf Infra/App
-            mkdir -p Infra/App
-            mv src/dist/cv/browser/* ./Infra/App/
 
     Deployment:
       runs-on: ubuntu-latest
@@ -48,30 +44,32 @@ jobs:
       steps:
           - name: Set up Terraform
             uses: hashicorp/setup-terraform@v3
-              
+            with:
+              terraform_version: latest
+
           - name: Terraform Init with s3 backend
-            working-directory: Infra/modules
             run: |
               terraform init -backend-config="bucket=${{ secrets.bucket_name }}" -backend-config="key=terraform/somasundars-com-cv-website/prod/terraform.tfstate" -backend-config="region=${{ secrets.aws_region }}" -backend-config="encrypt=true" -backend-config="use_lockfile=true"
+            working-directory: ./Infra/modules
 
           - name: Terraform Format
-            working-directory: Infra/modules
             run: terraform fmt -check
+            working-directory: ./Infra/modules
 
           - name: Terraform Validate
-            working-directory: Infra/modules
             run: terraform validate
+            working-directory: ./Infra/modules
 
           - name: Terraform Plan Apply
-            working-directory: Infra/modules
             if: inputs.run == 'apply'
             run: terraform plan -out=tfplan -var-file="variables.tfvars"
+            working-directory: ./Infra/modules
 
           - name: Terraform Plan Destroy
-            working-directory: Infra/modules
             if: inputs.run == 'destroy'
             run: terraform plan -out=tfplan -var-file="variables.tfvars" -destroy
+            working-directory: ./Infra/modules
 
           - name: Terraform Apply
-            working-directory: Infra/modules
             run: terraform apply -auto-approve tfplan
+            working-directory: ./Infra/modules
