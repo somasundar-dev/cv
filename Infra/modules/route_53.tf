@@ -18,9 +18,10 @@ resource "aws_route53_record" "cv_website_record" {
 
 # dns-record.tf
 resource "aws_route53_record" "cloudfront_alias" {
-  zone_id = data.aws_route53_zone.main.zone_id
-  name    = var.domain_name
-  type    = "A"
+  zone_id  = data.aws_route53_zone.cv_website_zone.zone_id
+  provider = aws.ap-south-1
+  name     = var.domain_name
+  type     = "A"
 
   alias {
     name                   = aws_cloudfront_distribution.cloudfront_distribution.domain_name

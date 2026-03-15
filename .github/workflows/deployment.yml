@@ -46,6 +46,12 @@ jobs:
           with:
             terraform_version: latest
 
+        - name: Configure AWS
+          uses: aws-actions/configure-aws-credentials@v4
+          with:
+            role-to-assume: ${{ secrets.aws_identity_provider_role }}
+            aws-region: ap-south-1
+
         - name: Terraform Init with s3 backend
           run: |
             terraform init -backend-config="bucket=somasundars-com-terraform-state" -backend-config="key=terraform/somasundars-com-cv-website/prod/terraform.tfstate" -backend-config="region=ap-south-1" -backend-config="encrypt=true" -backend-config="use_lockfile=true"
