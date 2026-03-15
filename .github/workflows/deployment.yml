@@ -65,12 +65,12 @@ jobs:
           - name: Terraform Plan Apply
             working-directory: Infra/modules
             if: inputs.run == 'apply'
-            run: terraform plan -out=tfplan -var-file="${{ inputs.tfvars_file_path }}"
+            run: terraform plan -out=tfplan -var-file="variables.tfvars"
 
           - name: Terraform Plan Destroy
             working-directory: Infra/modules
             if: inputs.run == 'destroy'
-            run: terraform plan -out=tfplan -var-file="${{ inputs.tfvars_file_path }}" -destroy
+            run: terraform plan -out=tfplan -var-file="variables.tfvars" -destroy
 
           - name: Terraform Apply
             working-directory: Infra/modules
