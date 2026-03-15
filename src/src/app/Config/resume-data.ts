@@ -9,10 +9,10 @@ export const RESUME_DATA: any = {
     'Results-driven Senior .NET Developer with {yearsOfExperience} years of experience in designing, developing and deploying scalable applications across enterprise domains. currently, contributing to delivering high-performance solutions using .NET, Angular, Mongo DB, Python and AWS Cloud services. Certified AWS Developer Associate, with hands-on experience in building cloud-native applications with strong background in CI/CD pipelines and cloud deployments. Experienced in leading small development teams, mentoring juniors and providing production support while ensuring system stability and reliability. Passionate about learning more about cloud architecture, system design, and building software solutions that creates measurable business impact in reducing manual effort using automated systems using cloud technologies.',
   avatarUrl: '/Photo.jpg',
   personalWebsiteUrl: 'https://somasundars.com',
-
+  mailto: 'mailto:sundar.soma@yahoo.com',
   email: 'sundar.soma@yahoo.com',
   tel: '+91 8344452066',
-
+  whatsapp: 'https://wa.me/918344452066',
   github: 'https://github.com/somasundar-dev',
   linkedIn: 'https://linkedin.com/in/somasundar-s',
   certifications: [
