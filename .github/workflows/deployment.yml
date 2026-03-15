@@ -20,7 +20,7 @@ permissions:
   contents: read
 
 jobs:
-    Generate-Build:
+    Generate-Build-Deploy:
       runs-on: ubuntu-latest
       steps:
         - name: Checkout caller repo
@@ -33,43 +33,42 @@ jobs:
 
         - name: Generate Angular Build
           run: |
-            cd ./src
+            cd src
             npm ci
             npm run build
+            cd ..
 
-    Deployment:
-      runs-on: ubuntu-latest
-      needs: Generate-Build
-      name: Terraform Deploy
-      steps:
-          - name: Set up Terraform
-            uses: hashicorp/setup-terraform@v3
-            with:
-              terraform_version: latest
+        - name: Current Directory
+          run: pwd
 
-          - name: Terraform Init with s3 backend
-            run: |
-              terraform init -backend-config="bucket=${{ secrets.bucket_name }}" -backend-config="key=terraform/somasundars-com-cv-website/prod/terraform.tfstate" -backend-config="region=${{ secrets.aws_region }}" -backend-config="encrypt=true" -backend-config="use_lockfile=true"
-            working-directory: ./Infra/modules
+        - name: Set up Terraform
+          uses: hashicorp/setup-terraform@v3
+          with:
+            terraform_version: latest
 
-          - name: Terraform Format
-            run: terraform fmt -check
-            working-directory: ./Infra/modules
+        - name: Terraform Init with s3 backend
+          run: |
+            terraform init -backend-config="somasundars-com-terraform-state" -backend-config="key=terraform/somasundars-com-cv-website/prod/terraform.tfstate" -backend-config="region=ap-south-1" -backend-config="encrypt=true" -backend-config="use_lockfile=true"
+          working-directory: Infra/modules
 
-          - name: Terraform Validate
-            run: terraform validate
-            working-directory: ./Infra/modules
+        - name: Terraform Format
+          run: terraform fmt -check
+          working-directory: Infra/modules
 
-          - name: Terraform Plan Apply
-            if: inputs.run == 'apply'
-            run: terraform plan -out=tfplan -var-file="variables.tfvars"
-            working-directory: ./Infra/modules
+        - name: Terraform Validate
+          run: terraform validate
+          working-directory: Infra/modules
 
-          - name: Terraform Plan Destroy
-            if: inputs.run == 'destroy'
-            run: terraform plan -out=tfplan -var-file="variables.tfvars" -destroy
-            working-directory: ./Infra/modules
+        - name: Terraform Plan Apply
+          if: inputs.run == 'apply'
+          run: terraform plan -out=tfplan -var-file="variables.tfvars"
+          working-directory: Infra/modules
 
-          - name: Terraform Apply
-            run: terraform apply -auto-approve tfplan
-            working-directory: ./Infra/modules
+        - name: Terraform Plan Destroy
+          if: inputs.run == 'destroy'
+          run: terraform plan -out=tfplan -var-file="variables.tfvars" -destroy
+          working-directory: Infra/modules
+
+        - name: Terraform Apply
+          run: terraform apply -auto-approve tfplan
+          working-directory: Infra/modules
