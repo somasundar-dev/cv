@@ -3,7 +3,7 @@
   <app-summary [name]="Info.name" [initials]="Info.initials" [avatarUrl]="Info.avatarUrl" [summary]="Info.summary"
     [about]="Info.about" [location]="Info.location" [locationLink]="Info.locationLink"
     [personalWebsiteUrl]="Info.personalWebsiteUrl" [email]="Info.email" [tel]="Info.tel" [githubUrl]="Info.github"
-    [linkedinUrl]="Info.linkedIn"></app-summary>
+    [linkedinUrl]="Info.linkedIn" [startDate]="Info.start_date"></app-summary>
 
   <app-work [workExperience]="Info.experiences"></app-work>
 
@@ -11,8 +11,99 @@
 
   <app-certificates [certificates]="Info.certifications"></app-certificates>
 
-  <app-skills [skills]="Info.skills" class="print:hidden"></app-skills>
-
   <app-projects [projects]="Info.projects"></app-projects>
+
+  <div class="fixed bottom-6 right-6 flex flex-col gap-3 items-end print:hidden">
+    <a class="bg-transparent hover:bg-gray-300 cursor-pointer text-white rounded-full p-3 shadow-lg" title="Download CV"
+      href="assets/Somasundar Resume.pdf" download>
+      <svg viewBox="0 0 1024 1024" class="icon w-6 h-6" version="1.1" xmlns="http://www.w3.org/2000/svg" fill="#000000">
+        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+        <g id="SVGRepo_iconCarrier">
+          <path
+            d="M768 810.7c-23.6 0-42.7-19.1-42.7-42.7s19.1-42.7 42.7-42.7c94.1 0 170.7-76.6 170.7-170.7 0-89.6-70.1-164.3-159.5-170.1L754 383l-10.7-22.7c-42.2-89.3-133-147-231.3-147s-189.1 57.7-231.3 147L270 383l-25.1 1.6c-89.5 5.8-159.5 80.5-159.5 170.1 0 94.1 76.6 170.7 170.7 170.7 23.6 0 42.7 19.1 42.7 42.7s-19.1 42.7-42.7 42.7c-141.2 0-256-114.8-256-256 0-126.1 92.5-232.5 214.7-252.4C274.8 195.7 388.9 128 512 128s237.2 67.7 297.3 174.2C931.5 322.1 1024 428.6 1024 554.7c0 141.1-114.8 256-256 256z"
+            fill="#3688FF"></path>
+          <path
+            d="M512 938.7c-10.9 0-21.8-4.2-30.2-12.5l-128-128c-16.7-16.7-16.7-43.7 0-60.3 16.6-16.7 43.7-16.7 60.3 0l97.8 97.8 97.8-97.8c16.6-16.7 43.7-16.7 60.3 0 16.7 16.7 16.7 43.7 0 60.3l-128 128c-8.2 8.3-19.1 12.5-30 12.5z"
+            fill="#5F6379"></path>
+          <path
+            d="M512 938.7c-23.6 0-42.7-19.1-42.7-42.7V597.3c0-23.6 19.1-42.7 42.7-42.7s42.7 19.1 42.7 42.7V896c0 23.6-19.1 42.7-42.7 42.7z"
+            fill="#5F6379"></path>
+        </g>
+      </svg>
+    </a>
+
+    <a class="bg-transparent hover:bg-gray-300 cursor-pointer text-white rounded-full p-3 shadow-lg" title="Email"
+      href="{{ Info.mailto }}" target="_blank">
+      <svg viewBox="0 0 32 32" class="w-6 h-6" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+        <g id="SVGRepo_iconCarrier">
+          <path
+            d="M2 11.9556C2 8.47078 2 6.7284 2.67818 5.39739C3.27473 4.22661 4.22661 3.27473 5.39739 2.67818C6.7284 2 8.47078 2 11.9556 2H20.0444C23.5292 2 25.2716 2 26.6026 2.67818C27.7734 3.27473 28.7253 4.22661 29.3218 5.39739C30 6.7284 30 8.47078 30 11.9556V20.0444C30 23.5292 30 25.2716 29.3218 26.6026C28.7253 27.7734 27.7734 28.7253 26.6026 29.3218C25.2716 30 23.5292 30 20.0444 30H11.9556C8.47078 30 6.7284 30 5.39739 29.3218C4.22661 28.7253 3.27473 27.7734 2.67818 26.6026C2 25.2716 2 23.5292 2 20.0444V11.9556Z"
+            fill="white"></path>
+          <path
+            d="M22.0515 8.52295L16.0644 13.1954L9.94043 8.52295V8.52421L9.94783 8.53053V15.0732L15.9954 19.8466L22.0515 15.2575V8.52295Z"
+            fill="#EA4335"></path>
+          <path
+            d="M23.6231 7.38639L22.0508 8.52292V15.2575L26.9983 11.459V9.17074C26.9983 9.17074 26.3978 5.90258 23.6231 7.38639Z"
+            fill="#FBBC05"></path>
+          <path
+            d="M22.0508 15.2575V23.9924H25.8428C25.8428 23.9924 26.9219 23.8813 26.9995 22.6513V11.459L22.0508 15.2575Z"
+            fill="#34A853"></path>
+          <path d="M9.94811 24.0001V15.0732L9.94043 15.0669L9.94811 24.0001Z" fill="#C5221F"></path>
+          <path
+            d="M9.94014 8.52404L8.37646 7.39382C5.60179 5.91001 5 9.17692 5 9.17692V11.4651L9.94014 15.0667V8.52404Z"
+            fill="#C5221F"></path>
+          <path d="M9.94043 8.52441V15.0671L9.94811 15.0734V8.53073L9.94043 8.52441Z" fill="#C5221F"></path>
+          <path
+            d="M5 11.4668V22.6591C5.07646 23.8904 6.15673 24.0003 6.15673 24.0003H9.94877L9.94014 15.0671L5 11.4668Z"
+            fill="#4285F4"></path>
+        </g>
+      </svg>
+    </a>
+    <a class="bg-transparent hover:bg-gray-300 cursor-pointer text-white rounded-full p-3 shadow-lg" title="WhatsApp"
+      href="{{ Info.whatsapp }}" target="_blank">
+      <svg viewBox="0 0 48 48" class="w-6 h-6" version="1.1" xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000">
+        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+        <g id="SVGRepo_iconCarrier">
+          <title>Whatsapp-color</title>
+          <desc>Created with Sketch.</desc>
+          <defs> </defs>
+          <g id="Icons" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+            <g id="Color-" transform="translate(-700.000000, -360.000000)" fill="#67C15E">
+              <path
+                d="M723.993033,360 C710.762252,360 700,370.765287 700,383.999801 C700,389.248451 701.692661,394.116025 704.570026,398.066947 L701.579605,406.983798 L710.804449,404.035539 C714.598605,406.546975 719.126434,408 724.006967,408 C737.237748,408 748,397.234315 748,384.000199 C748,370.765685 737.237748,360.000398 724.006967,360.000398 L723.993033,360.000398 L723.993033,360 Z M717.29285,372.190836 C716.827488,371.07628 716.474784,371.034071 715.769774,371.005401 C715.529728,370.991464 715.262214,370.977527 714.96564,370.977527 C714.04845,370.977527 713.089462,371.245514 712.511043,371.838033 C711.806033,372.557577 710.056843,374.23638 710.056843,377.679202 C710.056843,381.122023 712.567571,384.451756 712.905944,384.917648 C713.258648,385.382743 717.800808,392.55031 724.853297,395.471492 C730.368379,397.757149 732.00491,397.545307 733.260074,397.27732 C735.093658,396.882308 737.393002,395.527239 737.971421,393.891043 C738.54984,392.25405 738.54984,390.857171 738.380255,390.560912 C738.211068,390.264652 737.745308,390.095816 737.040298,389.742615 C736.335288,389.389811 732.90737,387.696673 732.25849,387.470894 C731.623543,387.231179 731.017259,387.315995 730.537963,387.99333 C729.860819,388.938653 729.198006,389.89831 728.661785,390.476494 C728.238619,390.928051 727.547144,390.984595 726.969123,390.744481 C726.193254,390.420348 724.021298,389.657798 721.340985,387.273388 C719.267356,385.42535 717.856938,383.125756 717.448104,382.434484 C717.038871,381.729275 717.405907,381.319529 717.729948,380.938852 C718.082653,380.501232 718.421026,380.191036 718.77373,379.781688 C719.126434,379.372738 719.323884,379.160897 719.549599,378.681068 C719.789645,378.215575 719.62006,377.735746 719.450874,377.382942 C719.281687,377.030139 717.871269,373.587317 717.29285,372.190836 Z"
+                id="Whatsapp"> </path>
+            </g>
+          </g>
+        </g>
+      </svg>
+    </a>
+
+    <a class="bg-transparent hover:bg-gray-300 cursor-pointer text-white rounded-full p-3 shadow-lg" title="Linkedin"
+      href="{{ Info.linkedIn }}" target="_blank">
+      <svg viewBox="0 -2 44 44" class="w-6 h-6" version="1.1" xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000">
+        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+        <g id="SVGRepo_iconCarrier">
+          <title>LinkedIn-color</title>
+          <desc>Created with Sketch.</desc>
+          <defs> </defs>
+          <g id="Icons" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+            <g id="Color-" transform="translate(-702.000000, -265.000000)" fill="#007EBB">
+              <path
+                d="M746,305 L736.2754,305 L736.2754,290.9384 C736.2754,287.257796 734.754233,284.74515 731.409219,284.74515 C728.850659,284.74515 727.427799,286.440738 726.765522,288.074854 C726.517168,288.661395 726.555974,289.478453 726.555974,290.295511 L726.555974,305 L716.921919,305 C716.921919,305 717.046096,280.091247 716.921919,277.827047 L726.555974,277.827047 L726.555974,282.091631 C727.125118,280.226996 730.203669,277.565794 735.116416,277.565794 C741.21143,277.565794 746,281.474355 746,289.890824 L746,305 L746,305 Z M707.17921,274.428187 L707.117121,274.428187 C704.0127,274.428187 702,272.350964 702,269.717936 C702,267.033681 704.072201,265 707.238711,265 C710.402634,265 712.348071,267.028559 712.41016,269.710252 C712.41016,272.34328 710.402634,274.428187 707.17921,274.428187 L707.17921,274.428187 L707.17921,274.428187 Z M703.109831,277.827047 L711.685795,277.827047 L711.685795,305 L703.109831,305 L703.109831,277.827047 L703.109831,277.827047 Z"
+                id="LinkedIn"> </path>
+            </g>
+          </g>
+        </g>
+      </svg>
+    </a>
+
+  </div>
 
 </main>
