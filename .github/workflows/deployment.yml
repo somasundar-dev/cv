@@ -41,43 +41,37 @@ jobs:
             mkdir -p Infra/App
             mv src/dist/cv/browser/* ./Infra/App/
 
-        - name: Replace placeholders
-          uses: Somasundar-Projects/replace-vars-action@v1.1.0
-          with:
-            input-file: "./Infra/variables.tfvars.json"
-            output-file: "./Infra/variables.tfvars.json"
-          env:
-            aws_region: ${{ vars.AWS_REGION }}
-            environment: "prod"
-            bucket_name: ${{ vars.TERRAFORM_STATE_BUCKET }}
-            app_name: "cv"
-            current_version: 1.0.${{ github.run_number }}
-            domain_name: ${{ secrets.WEBSITE_DOMAIN_NAME }}
-
-        - name: Create Terraform file
-          run: |
-            tar -czf Deployment-Terraform.tar.gz -C Infra .
-
-        - name: Upload artifact
-          uses: actions/upload-artifact@v4
-          with:
-            name: Deployment-Terraform
-            if-no-files-found: error
-            retention-days: 7
-            path: Deployment-Terraform.tar.gz
-
-
-    deployment:
+    Deployment:
+      runs-on: ubuntu-latest
       needs: Generate-Build
       name: Terraform Deploy
-      uses: Somasundar-Projects/Deployments/.github/workflows/terraform.yml@main
-      with:
-        app_name: "cv"
-        aws_region: ${{ vars.AWS_REGION }}
-        command: ${{ github.event.inputs.run || 'apply' }}
-        tfvars_file_path: "variables.tfvars.json"
-        bucket_name: ${{ vars.TERRAFORM_STATE_BUCKET }}
-        with_backend: true
-        environment: "prod"
-      secrets:
-        aws_identity_provider_role: ${{ secrets.AWS_OCID_ROLE }}
+      steps:
+          - name: Set up Terraform
+            uses: hashicorp/setup-terraform@v3
+              
+          - name: Terraform Init with s3 backend
+            working-directory: Infra/modules
+            run: |
+              terraform init -backend-config="bucket=${{ secrets.bucket_name }}" -backend-config="key=terraform/somasundars-com-cv-website/prod/terraform.tfstate" -backend-config="region=${{ secrets.aws_region }}" -backend-config="encrypt=true" -backend-config="use_lockfile=true"
+
+          - name: Terraform Format
+            working-directory: Infra/modules
+            run: terraform fmt -check
+
+          - name: Terraform Validate
+            working-directory: Infra/modules
+            run: terraform validate
+
+          - name: Terraform Plan Apply
+            working-directory: Infra/modules
+            if: inputs.run == 'apply'
+            run: terraform plan -out=tfplan -var-file="${{ inputs.tfvars_file_path }}"
+
+          - name: Terraform Plan Destroy
+            working-directory: Infra/modules
+            if: inputs.run == 'destroy'
+            run: terraform plan -out=tfplan -var-file="${{ inputs.tfvars_file_path }}" -destroy
+
+          - name: Terraform Apply
+            working-directory: Infra/modules
+            run: terraform apply -auto-approve tfplan
